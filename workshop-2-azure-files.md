@@ -94,10 +94,11 @@ Replace `NN` with your two-digit participant number. Do not use another particip
     - **Hierarchical namespace** is **Disabled**.
 8. In the left menu, under **Data storage**, select **Classic file shares**.
 9. In the file-share list, select the share named `workshop`.
-10. On the share **Overview** page, record the values for **Protocol**, **Access tier**, and **Quota**.
-11. In the breadcrumb at the top of the page, select the previous page to return to the file-share list.
-12. On the file-share page toolbar, select **Soft delete**.
-13. In the **Soft delete** pane, confirm that soft delete is **Enabled** and the retention period is **7 days**. Close the pane without making changes.
+10. On the share **Overview** page, keep the **Properties** tab selected. Under **Size**, record **Maximum storage (GiB)**, **Used storage capacity (GiB)**, and **Access tier**.
+11. Under **SMB protocol settings**, record **Security profile**, **SMB protocol versions**, and **SMB channel encryption** exactly as displayed. A dash (`-`) means that the portal is not showing a specific configured value.
+12. In the breadcrumb at the top of the page, select the previous page to return to the file-share list.
+13. On the file-share page toolbar, select **Soft delete**.
+14. In the **Soft delete** pane, confirm that soft delete is **Enabled** and record the displayed retention period. Close the pane without making changes.
 
 **Evidence:** Record the storage settings and explain why account-key access is an exception for this lab rather than the production recommendation.
 
@@ -546,7 +547,7 @@ Remove-Item $testPath
 
 11. **Permission pass:** the text is written, read, and deleted without an error. An `Access denied` result identifies an authorization or file-permission layer.
 12. In the portal, return to the metrics from Task 2 and inspect availability, latency, capacity, and throttling responses.
-13. **Service-state pass:** availability is healthy, capacity is below quota, and no meaningful throttling appears.
+13. **Service-state pass:** availability is healthy, used capacity is below the share's maximum storage, and no meaningful throttling appears.
 14. Record the first failed layer and the evidence. Do not change configuration until the facilitator reviews your diagnosis.
 
 **Pass criteria:** Identify the failing layer, show the evidence, and propose a verification action before changing configuration.
@@ -589,11 +590,12 @@ Remove-Item $testPath
 
 ### Scenario C: Capacity pressure
 
-1. In the storage account's left menu, under **Data storage**, select **Classic file shares**, select `workshop`, and record its quota.
-2. Select **Metrics**, display **File Capacity**, and record the current value, time range, and whether the metric is account- or share-scoped.
-3. Distinguish the configured share quota from storage-account or provisioned-capacity limits in your diagnosis.
-4. Calculate or describe the growth trend using the available chart period.
-5. Recommend one immediate action and an alert threshold that leaves enough time to respond before capacity is exhausted.
+1. In the storage account's left menu, under **Data storage**, select **Classic file shares**, and then select `workshop`.
+2. On the share **Overview** page, under **Size**, record **Maximum storage (GiB)** and **Used storage capacity (GiB)**.
+3. Select **Metrics**, display **File Capacity**, and record the current value, time range, and whether the metric is account- or share-scoped.
+4. Distinguish the share's **Maximum storage (GiB)** value from storage-account or provisioned-capacity limits in your diagnosis.
+5. Calculate or describe the growth trend using the available chart period.
+6. Recommend one immediate action and an alert threshold that leaves enough time to respond before capacity is exhausted.
 
 ### Scenario D: High latency
 
