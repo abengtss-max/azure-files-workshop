@@ -156,7 +156,6 @@ Test-NetConnection $hostName -Port 445
 8. Paste the following commands, and then press **Enter**:
 
 ```powershell
-$storageAccount = '<assigned-storage-account>'
 $shareName = 'workshop'
 $key = Read-Host 'Paste storage account key' -AsSecureString
 $credential = [pscredential]::new("Azure\$storageAccount", $key)
