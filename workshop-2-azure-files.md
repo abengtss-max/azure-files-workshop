@@ -106,19 +106,20 @@ Replace `NN` with your two-digit participant number. Do not use another particip
 
 1. If the storage account is no longer open, use the portal search box to open **Storage accounts**, and then select your `stfilespNN...` account.
 2. In the storage account's left menu, under **Security + networking**, select **Networking**.
-3. On the **Firewalls and virtual networks** tab, find **Public network access** and confirm that it is **Disabled**. Do not change it.
-4. At the top of the Networking page, select the **Private endpoint connections** tab.
+3. On the **Public access** tab, find **Public network access** and confirm that it is **Disabled**. Do not change it.
+4. At the top of the Networking page, select the **Private endpoints** tab.
 5. In the connection list, find the row for `pe-files-pNN`.
-6. Confirm that **Connection state** is **Approved** and **Subresource** is `file`.
+6. Confirm that **Connection state** is **Approved**.
 7. Select the private endpoint name `pe-files-pNN` to open the private endpoint resource.
-8. In the private endpoint's left menu, under **Settings**, select **DNS configuration**.
-9. Record the **Private IP address**. It should be in the lab network range `10.30.0.0/24`.
-10. In the portal search box, enter `Private DNS zones`, and then select **Private DNS zones** under **Services**.
-11. Select the zone named `privatelink.file.core.windows.net`.
-12. In the zone's left menu, select **Recordsets**.
-13. Find the A record whose name matches your storage account. Confirm that its IP address is the same private endpoint address recorded in step 9.
-14. In the zone's left menu, select **Virtual network links**.
-15. Confirm that the link for `vnet-lab-files-pNN` is present and its **Link status** is **Completed**.
+8. On the private endpoint **Overview** page, under **Essentials**, confirm that **Target sub-resource** is `file`. This means the private endpoint connects to the storage account's Azure Files service rather than its Blob, Queue, or Table service.
+9. In the private endpoint's left menu, under **Settings**, select **DNS configuration**.
+10. Record the **Private IP address**. It should be in the lab network range `10.30.0.0/24`.
+11. In the portal search box, enter `Private DNS zones`, and then select **Private DNS zones** under **Services**.
+12. Select the zone named `privatelink.file.core.windows.net`.
+13. In the zone's left menu, select **Recordsets**.
+14. Find the A record whose name matches your storage account. Confirm that its IP address is the same private endpoint address recorded in step 10.
+15. In the zone's left menu, select **Virtual network links**.
+16. Confirm that the link for `vnet-lab-files-pNN` is present and its **Link status** is **Completed**.
 
 ### Task 3: Validate DNS and TCP 445
 
@@ -439,8 +440,8 @@ Get-Content (Get-ChildItem Z:\BackupRestore -Filter quarterly-plan.txt -File -Re
 
 1. In the Azure portal search box, enter `Storage accounts`, select **Storage accounts**, and then select your `stfilespNN...` account.
 2. In the storage account's left menu, under **Security + networking**, select **Networking**.
-3. On **Firewalls and virtual networks**, confirm that **Public network access** is **Disabled**.
-4. Select the **Private endpoint connections** tab and confirm that `pe-files-pNN` is **Approved**.
+3. On the **Public access** tab, confirm that **Public network access** is **Disabled**.
+4. Select the **Private endpoints** tab and confirm that `pe-files-pNN` is **Approved**.
 5. In the left menu, under **Settings**, select **Configuration**.
 6. Confirm that **Secure transfer required** is **Enabled** and **Minimum TLS version** is **Version 1.2** or later.
 7. In the left menu, under **Data storage**, select **Classic file shares**.
