@@ -116,9 +116,9 @@ Replace `NN` with your two-digit participant number. Do not use another particip
 10. Record the **Private IP address**. It should be in the lab network range `10.30.0.0/24`.
 11. In the portal search box, enter `Private DNS zones`, and then select **Private DNS zones** under **Services**.
 12. Select the zone named `privatelink.file.core.windows.net`.
-13. In the zone's left menu, select **Recordsets**.
+13. In the zone's left menu, expand **DNS Management**, and then select **Recordsets**.
 14. Find the A record whose name matches your storage account. Confirm that its IP address is the same private endpoint address recorded in step 10.
-15. In the zone's left menu, select **Virtual network links**.
+15. In the zone's left menu, under **DNS Management**, select **Virtual Network Links**.
 16. Confirm that the link for `vnet-lab-files-pNN` is present and its **Link status** is **Completed**.
 
 ### Task 3: Validate DNS and TCP 445
