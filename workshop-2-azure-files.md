@@ -678,17 +678,6 @@ cmdkey /delete:$storageHost
 8. Notify the facilitator in the workshop meeting or shared chat that `rg-lab-files-pNN` is ready for cleanup.
 9. Stop here. Participants must not delete the resource group, Recovery Services vault, protected item, or storage account.
 
-### Facilitator verification and cleanup
-
-1. The facilitator confirms that all required validation evidence has been captured.
-2. The facilitator previews the workshop cleanup automation supplied separately by the workshop owner.
-3. The facilitator verifies that the preview names only the exact participant resource group `rg-lab-files-pNN`. If any other resource group appears, stop and do not run the cleanup.
-4. The facilitator runs the cleanup, which removes the protected Azure Files item, unregisters the storage container, removes the Recovery Services vault, and then deletes only `rg-lab-files-pNN`.
-5. If the vault reports that protected items or registered containers still exist, stop and resolve those dependencies through the cleanup automation. Do not force a broad deletion.
-6. After the facilitator reports completion, the participant searches for **Resource groups** in the portal and filters the list to the assigned subscription.
-7. Confirm that `rg-lab-files-pNN` is no longer listed. If it remains visible after refreshing, notify the facilitator.
-8. After all required first sign-ins are complete, the facilitator deletes any locally stored file containing participant temporary credentials.
-
 ## Microsoft Learn References
 
 - [Configure Azure Files network endpoints](https://learn.microsoft.com/azure/storage/files/storage-files-networking-endpoints)
