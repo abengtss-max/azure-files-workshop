@@ -699,16 +699,6 @@ Test-NetConnection $hostName -Port 445
 8. In **Validation**, repeat the latency, DNS, TCP 445, and transaction checks and confirm that user-observed open time returns to the agreed target.
 9. In **Prevention**, propose latency and throttling alerts plus a documented performance baseline.
 
-### Task 4: Complete the incident note
-
-1. Review your completed incident note and ensure it contains no passwords, account keys, or other secrets.
-2. Confirm that all seven rows contain scenario-specific content rather than general Azure Files guidance.
-3. Under the table, write `Strongest evidence:` followed by the metric, command result, recovery point, or portal value that most strongly supports the diagnosis.
-4. Write `Disproving evidence:` followed by one result that would show the diagnosis is wrong.
-5. Save the completed incident note with your workshop evidence.
-
-**Pass criteria:** The saved note contains all seven completed rows, one strongest-evidence statement, one disproving-evidence statement, and no secrets. No Azure configuration change or simulated destructive action is required.
-
 ## Cleanup
 
 Do not delete the resource group or any Azure resource. Environment deletion is performed separately after the workshop.
