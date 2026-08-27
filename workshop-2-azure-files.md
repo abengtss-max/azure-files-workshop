@@ -152,7 +152,7 @@ Test-NetConnection $hostName -Port 445
 4. At the top of the Access keys page, select **Show keys**.
 5. Under **key1**, select the **Copy to clipboard** button next to **Key**. Do not place the key in notes, chat, or screenshots.
 6. Return to the Bastion tab for `vm-filesclient-pNN` and the Windows PowerShell window opened in Task 3.
-7. Confirm that `$storageAccount` still contains your assigned account name by running `$storageAccount`. If it is blank or incorrect, set it again.
+7. Run `$storageAccount` and confirm that it displays the complete storage account name you recorded in Task 1, step 3. If it is blank or incorrect, replace `<assigned-storage-account>` with that recorded name and run `$storageAccount = '<assigned-storage-account>'`. Do not include angle brackets.
 8. Paste the following commands, and then press **Enter**:
 
 ```powershell
