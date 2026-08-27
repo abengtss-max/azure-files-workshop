@@ -62,11 +62,17 @@ Replace `NN` with your two-digit participant number. Do not use another particip
 
 1. Open [Azure portal](https://portal.azure.com) in an InPrivate or Incognito window.
 2. Sign in with the Workshop 2 account supplied by the facilitator and change the temporary password when prompted.
-3. Select **Directories + subscriptions** from the portal toolbar and verify that only your assigned subscription is selected.
-4. Search for **Resource groups**, open `rg-lab-files-pNN`, and confirm that both VMs are running.
-5. Open the required VM and select **Connect > Bastion**.
-6. For **Authentication Type**, select **VM Password**, enter the VM administrator credentials supplied by the facilitator, and select **Connect**.
-7. Bastion Developer deploys automatically on first use and opens the desktop in the browser. It is free, supports Sweden Central, and permits one VM connection at a time. Disconnect from one VM before connecting to the other.
+3. In the search box at the top of the portal, enter `Subscriptions`, and then select **Subscriptions** under **Services**.
+4. In the subscription list, select the subscription provided by the facilitator. On its **Overview** page, confirm that the **Subscription ID** matches your assigned subscription.
+5. In the portal search box, enter `Resource groups`, and then select **Resource groups** under **Services**.
+6. If resource groups from several subscriptions are shown, select **Add filter**, choose **Subscription**, select only your assigned subscription, and then select **Apply**.
+7. Select `rg-lab-files-pNN`. On the resource-group **Overview** page, locate these two virtual machines:
+    - `vm-filesclient-pNN` - the client VM used first for SMB connectivity and recovery exercises.
+    - `vm-fileserver-pNN` - the source VM used later for the Robocopy migration exercise.
+8. Select `vm-filesclient-pNN`. On the VM **Overview** page, confirm that **Status** is **Running**. If it is stopped, select **Start** and wait until the status changes to **Running**.
+9. Select **Connect > Bastion**.
+10. For **Authentication Type**, select **VM Password**, enter the VM administrator credentials supplied by the facilitator, and select **Connect**.
+11. Bastion Developer opens the Windows desktop in the browser and permits one VM connection at a time. When a later task requires `vm-fileserver-pNN`, disconnect from the client VM, return to `rg-lab-files-pNN`, open `vm-fileserver-pNN`, confirm that it is running, and repeat steps 9-10.
 
 ## Lab 1: Validate a Private SMB Share
 
