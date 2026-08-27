@@ -181,14 +181,45 @@ Get-Content Z:\Department\client-test.txt
 15. On the source VM **Overview** page, confirm that **Status** is **Running**. If necessary, select **Start** and wait for **Running**.
 16. Select **Connect > Bastion**, choose **VM Password**, enter the credentials supplied by the facilitator, and select **Connect**.
 17. On the source VM desktop, select **Start**, enter `Windows PowerShell`, and open **Windows PowerShell**.
-18. Repeat steps 7-10 on the source VM using the same storage account name and a newly copied storage key.
-19. Verify that the source VM can read the test file created by the client VM:
+18. Replace `<assigned-storage-account>` with the complete storage account name recorded in Task 1, step 3, and run the following commands. Do not include angle brackets.
+
+```powershell
+$storageAccount = '<assigned-storage-account>'
+$hostName = "$storageAccount.file.core.windows.net"
+Resolve-DnsName $hostName
+Test-NetConnection $hostName -Port 445
+```
+
+19. Confirm that `Resolve-DnsName` returns the private endpoint IP recorded in Task 2 and that `TcpTestSucceeded` is `True`.
+20. Return to the Azure portal tab. In the portal search box, enter `Storage accounts`, select **Storage accounts**, and then select your `stfilespNN...` account. Under **Security + networking**, select **Access keys**, select **Show keys**, and under **key1**, select the **Copy to clipboard** button next to **Key**.
+21. Return to the source VM's Bastion tab. Paste the following commands into PowerShell, and then press **Enter**:
+
+```powershell
+$shareName = 'workshop'
+$key = Read-Host 'Paste storage account key' -AsSecureString
+$credential = [pscredential]::new("Azure\$storageAccount", $key)
+New-PSDrive -Name Z -PSProvider FileSystem `
+    -Root "\\$storageAccount.file.core.windows.net\$shareName" `
+    -Credential $credential -Persist
+Get-ChildItem Z:\
+```
+
+22. When PowerShell displays `Paste storage account key`, right-click once inside the PowerShell window to paste the key, and then press **Enter**. Confirm that the `Z:` drive is created.
+23. Verify that the source VM can read the test file created by the client VM:
 
 ```powershell
 Get-Content Z:\Department\client-test.txt
 ```
 
-20. Confirm that the output is `Created from the client VM`. Leave this PowerShell window open for Lab 2.
+24. Confirm that the output is `Created from the client VM`.
+25. Create and read a source VM test file:
+
+```powershell
+Set-Content Z:\Department\source-test.txt 'Created from the source VM'
+Get-Content Z:\Department\source-test.txt
+```
+
+26. Confirm that the output is `Created from the source VM`. Leave this PowerShell window open for Lab 2.
 
 **Pass criteria:** Both VMs resolve the private endpoint, TCP 445 succeeds, and each can create and read a test file through `Z:`.
 
