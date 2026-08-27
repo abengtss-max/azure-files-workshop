@@ -92,10 +92,10 @@ Replace `NN` with your two-digit participant number. Do not use another particip
     - **Minimum TLS version** is **Version 1.2** or later.
     - **Allow storage account key access** is **Enabled** for this disposable lab.
     - **Hierarchical namespace** is **Disabled**.
-8. In the left menu, under **Data storage**, select **File shares**.
+8. In the left menu, under **Data storage**, select **Classic file shares**.
 9. In the file-share list, select the share named `workshop`.
 10. On the share **Overview** page, record the values for **Protocol**, **Access tier**, and **Quota**.
-11. Use the **File shares** breadcrumb at the top of the page to return to the file-share list.
+11. Use the **Classic file shares** breadcrumb at the top of the page to return to the file-share list.
 12. On the file-share page toolbar, select **Soft delete**.
 13. In the **Soft delete** pane, confirm that soft delete is **Enabled** and the retention period is **7 days**. Close the pane without making changes.
 
@@ -354,7 +354,7 @@ Get-Content Z:\Recovery\delete-me.txt
 ```
 
 8. Return to the Azure portal tab. In the portal search box, enter `Storage accounts`, select **Storage accounts**, and then select your `stfilespNN...` account.
-9. In the storage account's left menu, under **Data storage**, select **File shares**.
+9. In the storage account's left menu, under **Data storage**, select **Classic file shares**.
 10. Select the `workshop` share.
 11. In the share's left menu, under **Operations**, select **Snapshots**.
 12. On the toolbar, select **+ Add snapshot**.
@@ -442,7 +442,7 @@ Get-Content (Get-ChildItem Z:\BackupRestore -Filter quarterly-plan.txt -File -Re
 4. Select the **Private endpoint connections** tab and confirm that `pe-files-pNN` is **Approved**.
 5. In the left menu, under **Settings**, select **Configuration**.
 6. Confirm that **Secure transfer required** is **Enabled** and **Minimum TLS version** is **Version 1.2** or later.
-7. In the left menu, under **Data storage**, select **File shares**.
+7. In the left menu, under **Data storage**, select **Classic file shares**.
 8. On the file-share toolbar, select **Soft delete** and record the enabled state and retention period. Close the pane without making changes.
 9. In the storage account's left menu, select **Access control (IAM)**.
 10. Select the **Role assignments** tab and use the **Role** column to identify assignments that can read or manage the account. Record one relevant role and assignee without recording credentials.
@@ -589,7 +589,7 @@ Remove-Item $testPath
 
 ### Scenario C: Capacity pressure
 
-1. In the storage account, select **File shares**, select `workshop`, and record its quota.
+1. In the storage account's left menu, under **Data storage**, select **Classic file shares**, select `workshop`, and record its quota.
 2. Select **Metrics**, display **File Capacity**, and record the current value, time range, and whether the metric is account- or share-scoped.
 3. Distinguish the configured share quota from storage-account or provisioned-capacity limits in your diagnosis.
 4. Calculate or describe the growth trend using the available chart period.
