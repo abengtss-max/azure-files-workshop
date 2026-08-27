@@ -365,7 +365,6 @@ Test-Path Z:\Migration\HR\Policies\sample-002.txt
 3. If the answer is **No**, record **Direct Azure Files access** as the simpler target. Use a measured copy method such as Robocopy or AzCopy and avoid a permanent synchronization dependency.
 4. Record that cloud tiering manages local disk capacity but does not replace backup.
 5. Record the operational work introduced by Azure File Sync: agent updates, server registration, sync-health monitoring, files-not-syncing investigation, cloud-tiering policy tuning, and file recall planning.
-6. When asked by the facilitator, state your decision and give the single requirement that most strongly supports it.
 
 ## Lab 3: Protect and Recover Files
 
