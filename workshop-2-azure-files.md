@@ -83,7 +83,7 @@ Replace `NN` with your two-digit participant number. Do not use another particip
 
 1. In the search box at the top of the Azure portal, enter `Storage accounts`.
 2. Under **Services**, select **Storage accounts**.
-3. In the storage-account list, select the account whose name begins with `stfilespNN`. Use the exact account name supplied by the facilitator.
+3. In the storage-account list, select the account whose name begins with `stfilespNN`. In your workshop notes, record the complete storage account name exactly as displayed.
 4. On the storage-account **Overview** page, find the **Essentials** section.
 5. In your workshop notes, record the values for **Performance**, **Replication**, **Account kind**, and **Location**.
 6. In the storage account's left menu, under **Settings**, select **Configuration**.
@@ -126,7 +126,7 @@ Replace `NN` with your two-digit participant number. Do not use another particip
 1. Return to the Bastion browser tab connected to `vm-filesclient-pNN`.
 2. If no client VM session is open, return to `rg-lab-files-pNN`, select `vm-filesclient-pNN`, and connect using **Connect > Bastion**.
 3. On the Windows desktop, select **Start**, enter `Windows PowerShell`, and select **Windows PowerShell** from the search results.
-4. Replace `<assigned-storage-account>` below with the complete storage account name supplied by the facilitator. Do not include angle brackets.
+4. Replace `<assigned-storage-account>` below with the complete storage account name you recorded in Task 1, step 3. Do not include angle brackets.
 5. Paste the following commands into PowerShell, and then press **Enter**:
 
 ```powershell
