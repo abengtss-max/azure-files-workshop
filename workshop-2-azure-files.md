@@ -95,7 +95,7 @@ Replace `NN` with your two-digit participant number. Do not use another particip
 8. In the left menu, under **Data storage**, select **Classic file shares**.
 9. In the file-share list, select the share named `workshop`.
 10. On the share **Overview** page, record the values for **Protocol**, **Access tier**, and **Quota**.
-11. Use the **Classic file shares** breadcrumb at the top of the page to return to the file-share list.
+11. In the breadcrumb at the top of the page, select the previous page to return to the file-share list.
 12. On the file-share page toolbar, select **Soft delete**.
 13. In the **Soft delete** pane, confirm that soft delete is **Enabled** and the retention period is **7 days**. Close the pane without making changes.
 
