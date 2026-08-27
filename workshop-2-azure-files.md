@@ -270,7 +270,7 @@ $stopwatch.Stop()
 }
 ```
 
-3. Wait until the PowerShell prompt returns and the summary object displays **RobocopyExitCode** and **ElapsedSeconds**.
+3. Wait until Robocopy finishes. If PowerShell displays `>> }` after the last pasted line, press **Enter** once to run the completed summary command. Do not press **Ctrl+C**. Confirm that the summary object displays **RobocopyExitCode** and **ElapsedSeconds**.
 4. Confirm that **RobocopyExitCode** is between `0` and `7`. These values indicate success or an informational result. A value of `8` or higher indicates at least one failed copy; stop and ask the facilitator for help.
 5. Review the last 20 lines of the saved log:
 
@@ -278,8 +278,15 @@ $stopwatch.Stop()
 Get-Content C:\LabLogs\robocopy-initial.log -Tail 20
 ```
 
-6. In the robocopy summary, find the **Files** row and confirm that the **Failed** count is `0`.
-7. Record **Copied**, **Skipped**, **Mismatch**, **Failed**, **Extras**, **RobocopyExitCode**, and **ElapsedSeconds** in your workshop notes.
+6. In the Robocopy summary, find the **Files** row and confirm that **Mismatch**, **Failed**, and **Extras** are all `0`. On the first run, the standard lab dataset should show **Total** `42`, **Copied** `42`, and **Skipped** `0`. If you repeat the command after a successful copy without changing any files, **Copied** `0` and **Skipped** `42` is expected.
+7. Record **Copied**, **Skipped**, **Mismatch**, **Failed**, **Extras**, **RobocopyExitCode**, and **ElapsedSeconds** in your workshop notes. If you accidentally pressed **Ctrl+C** after `$stopwatch.Stop()`, run the following command to display the saved values:
+
+```powershell
+[pscustomobject]@{
+    RobocopyExitCode = $exitCode
+    ElapsedSeconds   = [math]::Round($stopwatch.Elapsed.TotalSeconds, 2)
+} | Format-List
+```
 
 ### Task 3: Validate counts, bytes, and hashes
 
