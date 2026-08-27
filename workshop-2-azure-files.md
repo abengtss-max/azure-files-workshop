@@ -136,6 +136,8 @@ Resolve-DnsName $hostName
 Test-NetConnection $hostName -Port 445
 ```
 
+![Successful private DNS resolution and TCP 445 connectivity test in Windows PowerShell](assets/workshop-2-dns-tcp445-success.png)
+
 6. In the `Resolve-DnsName` output, confirm that the standard hostname points to a name ending in `privatelink.file.core.windows.net` and returns the private IP recorded in Task 2.
 7. In the `Test-NetConnection` output, confirm that `RemotePort` is `445` and `TcpTestSucceeded` is `True`.
 8. If the returned address is not the private endpoint IP or `TcpTestSucceeded` is `False`, stop and ask the facilitator for help before continuing.
