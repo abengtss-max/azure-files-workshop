@@ -249,7 +249,7 @@ $sourceInventory | Format-List
 ```
 
 6. Record the four displayed values in your workshop notes.
-7. For the standard lab dataset, confirm that **FileCount** is `42`, **FolderCount** is `11`, and **TotalBytes** is `5348317`. If these values differ, record the actual values and ask the facilitator before continuing.
+7. For the standard lab dataset, confirm that **FileCount** is `42`, **FolderCount** is `11`, **TotalBytes** is `5348317`, and **LargestFile** is `C:\LabSource\Engineering\engineering-payload.bin`. If these values differ, record the actual values and ask the facilitator before continuing.
 8. In your notes, identify one business process that might keep files open and therefore require a planned cutover window during a real migration.
 
 ### Task 2: Run the initial copy
