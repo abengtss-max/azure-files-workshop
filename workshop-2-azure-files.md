@@ -85,7 +85,7 @@ Replace `NN` with your two-digit participant number. Do not use another particip
 2. Under **Services**, select **Storage accounts**.
 3. In the storage-account list, select the account whose name begins with `stfilespNN`. Use the exact account name supplied by the facilitator.
 4. On the storage-account **Overview** page, find the **Essentials** section.
-5. In your workshop notes, record the values for **Performance**, **Redundancy**, **Account kind**, and **Location**.
+5. In your workshop notes, record the values for **Performance**, **Replication**, **Account kind**, and **Location**.
 6. In the storage account's left menu, under **Settings**, select **Configuration**.
 7. On the **Configuration** page, verify each setting below. Do not change any setting.
     - **Secure transfer required** is **Enabled**.
