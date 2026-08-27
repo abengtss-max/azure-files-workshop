@@ -2,7 +2,7 @@
 
 This workshop uses an isolated Azure environment. A Windows Server VM simulates a source file server, a second Windows Server VM acts as the client, and an SMB Azure file share is exposed only through a private endpoint. No customer-network connectivity is required.
 
-Procedures and portal labels were checked against Microsoft Learn on **26 August 2026**. Azure portal experiences can change; the facilitator should recheck the linked Learn articles shortly before delivery.
+Procedures and portal labels were checked against Microsoft Learn on **26 August 2026**. Azure portal experiences can change; use the linked Learn articles to confirm labels if the current portal differs.
 
 ## Outcomes
 
@@ -43,14 +43,14 @@ Replace `NN` with your two-digit participant number. Do not use another particip
 | Item | Assigned value |
 |---|---|
 | Participant | `pNN` |
-| Subscription | Provided by facilitator |
+| Subscription | Listed in your workshop assignment |
 | Region | `Sweden Central` |
 | Resource group | `rg-lab-files-pNN` |
 | Virtual network | `vnet-lab-files-pNN` |
 | Subnet | `snet-workload` |
 | Client VM | `vm-filesclient-pNN` |
 | Source VM | `vm-fileserver-pNN` |
-| Storage account | Provided by facilitator; begins `stfilespNN` |
+| Storage account | Listed in your workshop assignment; begins `stfilespNN` |
 | File share | `workshop` |
 | Private endpoint | `pe-files-pNN` |
 | Private DNS zone | `privatelink.file.core.windows.net` |
@@ -61,9 +61,9 @@ Replace `NN` with your two-digit participant number. Do not use another particip
 ## Sign In and Connect to the VMs
 
 1. Open [Azure portal](https://portal.azure.com) in an InPrivate or Incognito window.
-2. Sign in with the Workshop 2 account supplied by the facilitator and change the temporary password when prompted.
+2. Sign in with the Workshop 2 account listed in your workshop assignment and change the temporary password when prompted.
 3. In the search box at the top of the portal, enter `Subscriptions`, and then select **Subscriptions** under **Services**.
-4. In the subscription list, select the subscription provided by the facilitator. On its **Overview** page, confirm that the **Subscription ID** matches your assigned subscription.
+4. In the subscription list, select the subscription listed in your workshop assignment. On its **Overview** page, confirm that the **Subscription ID** matches your assigned subscription.
 5. In the portal search box, enter `Resource groups`, and then select **Resource groups** under **Services**.
 6. If resource groups from several subscriptions are shown, select **Add filter**, choose **Subscription**, select only your assigned subscription, and then select **Apply**.
 7. Select `rg-lab-files-pNN`. On the resource-group **Overview** page, locate these two virtual machines:
@@ -71,7 +71,7 @@ Replace `NN` with your two-digit participant number. Do not use another particip
     - `vm-fileserver-pNN` - the source VM used later for the Robocopy migration exercise.
 8. Select `vm-filesclient-pNN`. On the VM **Overview** page, confirm that **Status** is **Running**. If it is stopped, select **Start** and wait until the status changes to **Running**.
 9. Select **Connect > Bastion**.
-10. For **Authentication Type**, select **VM Password**, enter the VM administrator credentials supplied by the facilitator, and select **Connect**.
+10. For **Authentication Type**, select **VM Password**, enter the VM administrator credentials listed in your workshop assignment, and select **Connect**.
 11. Bastion Developer opens the Windows desktop in the browser and permits one VM connection at a time. When a later task requires `vm-fileserver-pNN`, disconnect from the client VM, return to `rg-lab-files-pNN`, open `vm-fileserver-pNN`, confirm that it is running, and repeat steps 9-10.
 
 ## Lab 1: Validate a Private SMB Share
@@ -140,7 +140,7 @@ Test-NetConnection $hostName -Port 445
 
 6. In the `Resolve-DnsName` output, confirm that the standard hostname points to a name ending in `privatelink.file.core.windows.net` and returns the private IP recorded in Task 2.
 7. In the `Test-NetConnection` output, confirm that `RemotePort` is `445` and `TcpTestSucceeded` is `True`.
-8. If the returned address is not the private endpoint IP or `TcpTestSucceeded` is `False`, stop and ask the facilitator for help before continuing.
+8. If either check fails, verify that `$storageAccount` exactly matches the name recorded in Task 1 and run both commands once more. If the result still fails, record the DNS output and `TcpTestSucceeded` value, do not attempt to mount the share, and continue with the portal-only steps in Lab 3.
 
 > Always mount the standard `file.core.windows.net` hostname. Do not mount the `privatelink` hostname directly.
 
@@ -179,7 +179,7 @@ Get-Content Z:\Department\client-test.txt
 13. Close the client VM's Bastion browser tab. Bastion Developer supports only one active VM connection at a time.
 14. In the Azure portal, return to `rg-lab-files-pNN` and select `vm-fileserver-pNN`.
 15. On the source VM **Overview** page, confirm that **Status** is **Running**. If necessary, select **Start** and wait for **Running**.
-16. Select **Connect > Bastion**, choose **VM Password**, enter the credentials supplied by the facilitator, and select **Connect**.
+16. Select **Connect > Bastion**, choose **VM Password**, enter the VM administrator credentials listed in your workshop assignment, and select **Connect**.
 17. On the source VM desktop, select **Start**, enter `Windows PowerShell`, and open **Windows PowerShell**.
 18. Replace `<assigned-storage-account>` with the complete storage account name recorded in Task 1, step 3, and run the following commands. Do not include angle brackets.
 
@@ -231,7 +231,7 @@ Get-Content Z:\Department\source-test.txt
 ### Task 1: Inventory the source
 
 1. Continue in the Bastion session for `vm-fileserver-pNN` that you opened at the end of Lab 1.
-2. If that session is closed, return to `rg-lab-files-pNN`, select `vm-fileserver-pNN`, select **Connect > Bastion**, and sign in using the VM credentials supplied by the facilitator.
+2. If that session is closed, return to `rg-lab-files-pNN`, select `vm-fileserver-pNN`, select **Connect > Bastion**, and sign in using the VM administrator credentials listed in your workshop assignment.
 3. On the Windows desktop, select **Start**, enter `Windows PowerShell`, and open **Windows PowerShell**.
 4. Confirm that the `Z:` drive is mounted by running `Get-PSDrive Z`. If PowerShell reports that drive `Z` does not exist, repeat the mount procedure from Lab 1, Task 4 before continuing.
 5. The pre-stage process created nested paths, an empty folder, long names, text files, and a 5 MiB binary file under `C:\LabSource`. Paste the following inventory commands into PowerShell, and then press **Enter**:
@@ -249,7 +249,7 @@ $sourceInventory | Format-List
 ```
 
 6. Record the four displayed values in your workshop notes.
-7. For the standard lab dataset, confirm that **FileCount** is `42`, **FolderCount** is `11`, **TotalBytes** is `5348317`, and **LargestFile** is `C:\LabSource\Engineering\engineering-payload.bin`. If these values differ, record the actual values and ask the facilitator before continuing.
+7. For the standard lab dataset, confirm that **FileCount** is `42`, **FolderCount** is `11`, **TotalBytes** is `5348317`, and **LargestFile** is `C:\LabSource\Engineering\engineering-payload.bin`. If any value differs, run the inventory commands once more. If it still differs, record the actual values and stop Lab 2 because the migration validation depends on the standard source dataset.
 8. In your notes, identify one business process that might keep files open and therefore require a planned cutover window during a real migration.
 
 ### Task 2: Run the initial copy
@@ -271,7 +271,7 @@ $stopwatch.Stop()
 ```
 
 3. Wait until Robocopy finishes. If PowerShell displays `>> }` after the last pasted line, press **Enter** once to run the completed summary command. Do not press **Ctrl+C**. Confirm that the summary object displays **RobocopyExitCode** and **ElapsedSeconds**.
-4. Confirm that **RobocopyExitCode** is between `0` and `7`. These values indicate success or an informational result. A value of `8` or higher indicates at least one failed copy; stop and ask the facilitator for help.
+4. Confirm that **RobocopyExitCode** is between `0` and `7`. These values indicate success or an informational result. For a value of `8` or higher, run `Get-Content C:\LabLogs\robocopy-initial.log -Tail 30`, record the output, and stop Lab 2 without running the delta copy.
 5. Review the last 20 lines of the saved log:
 
 ```powershell
@@ -321,7 +321,7 @@ Compare-Object $sourceHashes $destinationHashes -Property RelativePath, Hash
 
 3. Compare the displayed source and destination inventories. Confirm that **FileCount**, **FolderCount**, and **TotalBytes** have the same values on both sides.
 4. Look immediately below the `Compare-Object` command. The expected result is no output followed by a new PowerShell prompt; this means every relative path and SHA256 hash matches.
-5. If the inventory values differ or `Compare-Object` displays any rows, do not continue. Run `Get-Content C:\LabLogs\robocopy-initial.log -Tail 30`, record the output, and ask the facilitator for help.
+5. If the inventory values differ or `Compare-Object` displays any rows, run the initial-copy command from Task 2 once more and repeat the validation commands. If the values or hashes still differ, run `Get-Content C:\LabLogs\robocopy-initial.log -Tail 30`, record the output, and stop Lab 2 without running the delta copy.
 
 ### Task 4: Run a delta copy
 
@@ -358,7 +358,7 @@ Test-Path Z:\Migration\HR\Policies\sample-002.txt
 
 ## Azure File Sync Decision Exercise
 
-**Time:** 20 minutes, facilitator-led. No deployment.
+**Time:** 20 minutes, guided discussion. No deployment.
 
 1. In your workshop notes, write the question: **After migration, will Windows file servers remain in the environment?**
 2. If the answer is **Yes**, record whether local caching, branch-office access, or a low-downtime transition is required. These are reasons to consider Azure File Sync.
@@ -375,7 +375,7 @@ Test-Path Z:\Migration\HR\Policies\sample-002.txt
 
 1. Close the Bastion tab for `vm-fileserver-pNN` if it is still open.
 2. In the Azure portal, open `rg-lab-files-pNN`, and then select `vm-filesclient-pNN`.
-3. Confirm that the VM status is **Running**, select **Connect > Bastion**, and sign in using the VM credentials supplied by the facilitator.
+3. Confirm that the VM status is **Running**, select **Connect > Bastion**, and sign in using the VM administrator credentials listed in your workshop assignment.
 4. On the client VM desktop, select **Start**, enter `Windows PowerShell`, and open **Windows PowerShell**.
 5. Confirm that drive `Z:` is mounted by running `Get-PSDrive Z`. If it is missing, repeat the mount procedure from Lab 1, Task 4.
 6. Paste the following commands to create two recovery test files, and then press **Enter**:
@@ -434,7 +434,7 @@ Get-ChildItem Z:\Recovery
 12. Wait for the notification that the backup job was submitted.
 13. In the vault's left menu, under **Resiliency**, select **Monitoring + Reporting**, and then select **Jobs**.
 14. Find the newest Azure Files backup job. Select **Refresh** periodically until **Status** changes from **In progress** to **Completed**.
-15. If the job changes to **Failed** or **Completed with warnings**, select the job, record the error details, and ask the facilitator before continuing.
+15. If the job changes to **Failed** or **Completed with warnings**, select the job and record its **Status**, **Error code**, and **Error message**. Return to the protected `workshop` item and use an earlier completed recovery point in Task 3. If no completed recovery point is available, skip Task 3 and continue to Lab 4.
 
 ### Task 3: Restore an individual file to an alternate location
 
@@ -450,11 +450,11 @@ Get-ChildItem Z:\Recovery
 10. In **Folder Name**, enter `BackupRestore`.
 11. Select **Add File**.
 12. In the file browser, open `Recovery`, select `quarterly-plan.txt`, and then select **Select**.
-13. For conflict resolution, select **Skip** unless the facilitator directs otherwise. This prevents an existing destination file from being overwritten.
+13. For conflict resolution, select **Skip**. This prevents an existing destination file from being overwritten.
 14. Review the recovery point, destination, and selected file, and then select **Restore**.
 15. Wait for the notification that the restore job was submitted.
 16. In the vault's left menu, under **Resiliency**, select **Monitoring + Reporting**, and then select **Jobs**.
-17. Find the newest restore job and select **Refresh** until **Status** is **Completed**. If it fails or completes with warnings, select the job, record the error, and ask the facilitator.
+17. Find the newest restore job and select **Refresh** until **Status** is **Completed**. If it changes to **Failed** or **Completed with warnings**, select the job, record its **Status**, **Error code**, and **Error message**, skip the recovered-file comparison, and continue to Lab 4.
 18. Return to the Bastion tab connected to `vm-filesclient-pNN` and open Windows PowerShell if needed.
 19. Locate the recovered file and compare its content with the current live file:
 
@@ -516,9 +516,9 @@ Get-Content (Get-ChildItem Z:\BackupRestore -Filter quarterly-plan.txt -File -Re
 4. Confirm that all available log categories and **AllMetrics** are selected and that **Send to Log Analytics workspace** points to `log-lab-files-pNN`. Select **Discard changes** or use the browser's **Back** button; do not save changes.
 5. In the storage account's left menu, under **Monitoring**, select **Alerts**.
 6. Select **Alert rules**, and then select `alert-files-availability-pNN`.
-7. Confirm that **Scope** is your storage account or its file service. If it names another account or resource group, stop and contact the facilitator.
+7. Confirm that **Scope** is your storage account or its file service. If it names another account or resource group, record the displayed scope, close the alert without saving changes, and continue to Task 4.
 8. Confirm the condition uses **Availability**, **Average**, **Less than**, threshold `99.9`, evaluation frequency **5 minutes**, and lookback period **1 hour**.
-9. Select the **Actions** tab or section and confirm that the action group is `ag-lab-files-pNN`. It may intentionally have no notification receiver unless the facilitator supplied an email address.
+9. Select the **Actions** tab or section and confirm that the action group is `ag-lab-files-pNN`. The lab action group may intentionally have no notification receiver.
 10. Return to the Bastion tab connected to `vm-filesclient-pNN` and open Windows PowerShell if needed.
 11. Run the following loop to generate SMB create and read operations for diagnostic logs:
 
@@ -544,11 +544,11 @@ StorageFileLogs
 ```
 
 18. In the **Results** pane, confirm that a table appears with **Protocol**, **OperationName**, **StatusText**, and **Operations** columns. At least one row should have a positive operation count.
-19. If no rows appear, wait another two to three minutes and select **Run** again. If the query displays an error, verify that the first line is exactly `StorageFileLogs`; if it remains unavailable after ten minutes, record the result and ask the facilitator.
+19. If no rows appear, wait another two to three minutes and select **Run** again. If the query displays an error, verify that the first line is exactly `StorageFileLogs`. If the table remains unavailable after ten minutes, record the query, time range, and displayed error or empty result, and continue to Task 4.
 
 ### Task 4: Use the troubleshooting ladder
 
-1. Use `vm-filesclient-pNN` unless the facilitator names a different VM. Open Windows PowerShell using **Start > Windows PowerShell**.
+1. Use `vm-filesclient-pNN`. Open Windows PowerShell using **Start > Windows PowerShell**.
 2. Set the assigned account name, and then test name resolution:
 
 ```powershell
@@ -574,7 +574,7 @@ cmdkey /list
 
 7. **Credential pass:** drive `Z:` exists and any cached entry refers to the assigned storage hostname. Do not paste or display the storage key while troubleshooting.
 8. In the portal, open the storage account, select **Networking**, and confirm public access is disabled and `pe-files-pNN` is approved. Then open `privatelink.file.core.windows.net`, select **Virtual network links**, and confirm `vnet-lab-files-pNN` is linked.
-9. **Network-access pass:** all three states match. Correct these only under facilitator direction.
+9. **Network-access pass:** all three states match. If a state differs, record it as the first failed layer. Do not change Azure configuration in this diagnostic exercise.
 10. Test file permissions from the client VM:
 
 ```powershell
@@ -587,19 +587,34 @@ Remove-Item $testPath
 11. **Permission pass:** the text is written, read, and deleted without an error. An `Access denied` result identifies an authorization or file-permission layer.
 12. In the portal, return to the metrics from Task 2 and inspect availability, latency, capacity, and throttling responses.
 13. **Service-state pass:** availability is healthy, used capacity is below the share's maximum storage, and no meaningful throttling appears.
-14. Record the first failed layer and the evidence. Do not change configuration until the facilitator reviews your diagnosis.
+14. Record the first failed layer and the evidence. Do not change configuration in this diagnostic exercise. Continue to Lab 5 after saving the result.
 
 **Pass criteria:** Identify the failing layer, show the evidence, and propose a verification action before changing configuration.
 
 ## Lab 5: Incident Scenarios
 
 **Time:** 60 minutes  
-**Purpose:** Produce an evidence-based response to an ambiguous incident.
+**Purpose:** Use evidence from the healthy lab environment to produce a response to a simulated incident.
 
-1. Wait for the facilitator to assign Scenario A, B, C, or D. If no scenario has been assigned, ask before starting.
-2. Open Notepad or your workshop notes on your local computer.
-3. Copy the table below and complete every row for the assigned scenario.
-4. Use evidence gathered in Labs 1-4. You may return to the portal or `vm-filesclient-pNN` to collect missing evidence, but do not change Azure configuration.
+This is a tabletop exercise. No fault is introduced into Azure, and the current environment is expected to remain healthy. The scenario facts describe a simulated production incident; portal data and command output from your lab provide the technical evidence for your response.
+
+### Task 1: Select your scenario
+
+Use the last digit of your participant number. Complete one scenario only:
+
+| Participant number ends in | Scenario |
+|---|---|
+| `1` or `5` | Scenario A: Accidental deletion |
+| `2` or `6` | Scenario B: Suspected ransomware |
+| `3` or `7` | Scenario C: Capacity pressure |
+| `4` or `8` | Scenario D: High latency |
+
+### Task 2: Create the incident note
+
+1. Open Notepad or your workshop notes on your local computer.
+2. Add the heading `Lab 5 incident note - Scenario <letter>`.
+3. Copy the table below into your notes.
+4. Complete every row using the supplied scenario facts and the evidence you collect in Task 3. Do not change Azure configuration.
 
 | Field | Required content |
 |---|---|
@@ -611,49 +626,92 @@ Remove-Item $testPath
 | Validation | How correct service and data are proven |
 | Prevention | Control, alert, process, or architecture change |
 
-### Scenario A: Accidental deletion
+### Task 3: Investigate your scenario
 
-1. Record the affected path, users, business impact, first observed time, and last known-good time.
-2. In the portal, open `rsv-lab-files-pNN`, select **Protected items**, and inspect the available recovery-point times for `workshop`.
-3. Choose Previous Versions, snapshot item recovery, or full-share restore, and explain why it matches the impact.
-4. Set the proposed destination to an alternate path such as `BackupRestore`; do not overwrite the live path during diagnosis.
-5. Define validation with the data owner: expected file count, content, timestamps, and permissions.
+#### Scenario A: Accidental deletion
 
-### Scenario B: Suspected ransomware
+**Simulated facts:** At 14:10, a user reported that `Department\Operations` was deleted. Twenty users cannot access current operating documents. The folder was last known to be present at 13:45.
 
-1. Record which paths, file types, and users are affected and when abnormal changes began.
-2. Propose a method to stop further writes without deleting files, logs, snapshots, or other evidence.
-3. In the Recovery Services vault, inspect available recovery-point times and identify the newest point before the suspected encryption began.
-4. Compare the lab's snapshot-tier protection with vaulted backup isolation and immutability options. Record the difference in protection against destructive access.
-5. Propose recovery to an isolated location, malware scanning, data-owner validation, and a controlled cutover. Do not perform a live ransomware simulation.
+1. Enter the simulated facts in the **Impact** and **Time window** rows of the incident note.
+2. In the Azure portal search box, enter `rsv-lab-files-pNN`, replacing `NN` with your participant number, and open the matching Recovery Services vault.
+3. In the vault's left menu, under **Resiliency**, select **Protected inventory**, and then select **Protected items**.
+4. Set **Datasource type** to **Azure Storage (Azure Files)**. If your portal uses **Azure Files (Azure Storage)**, select that equivalent label.
+5. Select the protected item for `workshop`, select **File Recovery**, and then select **Select** under **Restore Point**. Do not start a restore.
+6. Record the newest recovery point from before 13:45 in the **Evidence** row. If no recovery point is from before 13:45, record the oldest available recovery point and state that it does not meet the requested recovery time. Close the pane without starting a restore.
+7. In the **Diagnosis** row, identify accidental deletion as the likely data-layer failure and state your confidence level.
+8. In the **Action** row, choose item-level recovery to an alternate path such as `BackupRestore`. State that the live path must not be overwritten until the restored files are checked.
+9. In the **Validation** row, require confirmation of the expected folders, file count, file contents, timestamps, and permissions before copying data back.
+10. In the **Prevention** row, propose least-privilege write access, deletion monitoring, and a documented item-recovery procedure.
 
-### Scenario C: Capacity pressure
+#### Scenario B: Suspected ransomware
 
-1. In the storage account's left menu, under **Data storage**, select **Classic file shares**, and then select `workshop`.
-2. On the share **Overview** page, under **Size**, record **Maximum storage (GiB)** and **Used storage capacity (GiB)**.
-3. Select **Metrics**, display **File Capacity**, and record the current value, time range, and whether the metric is account- or share-scoped.
-4. Distinguish the share's **Maximum storage (GiB)** value from storage-account or provisioned-capacity limits in your diagnosis.
-5. Calculate or describe the growth trend using the available chart period.
-6. Recommend one immediate action and an alert threshold that leaves enough time to respond before capacity is exhausted.
+**Simulated facts:** At 14:10, users reported that files below `Department\Finance` had unfamiliar extensions and could not be opened. Normal access was last confirmed at 13:30. The affected client is still connected to the share.
 
-### Scenario D: High latency
+1. Enter the simulated facts in the **Impact** and **Time window** rows of the incident note.
+2. On `vm-filesclient-pNN`, open Windows PowerShell and run the following commands after replacing the placeholder with the storage account name recorded in Lab 1:
 
-1. In the storage account's **Metrics** page, record **Success E2E Latency** and **Success Server Latency** for the same time range.
-2. On `vm-filesclient-pNN`, run the DNS and TCP 445 checks from Lab 4, Task 4 and record the result.
-3. In **Transactions**, split by **Response type** and check for throttling.
-4. Record the workload's likely operation pattern, such as many small files, large sequential transfers, or high IOPS.
-5. Decide whether the evidence supports changing the tier, using provisioned performance, adding Azure File Sync local caching, or changing the workload. Tie the recommendation to one observed metric or command result.
+```powershell
+$storageAccount = '<assigned-storage-account>'
+Get-PSDrive Z
+Test-NetConnection "$storageAccount.file.core.windows.net" -Port 445
+```
 
-### Complete and present your incident note
+3. Record the mapped-drive state and `TcpTestSucceeded` value in **Evidence**. These healthy results show that connectivity alone does not explain the simulated file changes.
+4. In the portal, open `rsv-lab-files-pNN`. Under **Resiliency**, select **Protected inventory > Protected items**, set **Datasource type** to the Azure Files label, and select `workshop`.
+5. Select **File Recovery**, and then select **Select** under **Restore Point**. Record the newest recovery point from before 13:30. If none exists, record that the recovery-point objective cannot be met. Close the pane without starting a restore.
+6. In **Diagnosis**, identify suspected malicious data modification and state that the connected client is a possible source that requires investigation.
+7. In **Action**, propose isolating the affected client from the network, preserving logs and snapshots, blocking further writes using the organization's incident procedure, and recovering the selected point to an alternate location. Do not run a ransomware simulation or delete evidence.
+8. In **Validation**, require malware scanning plus checks of file names, file contents, file count, timestamps, and permissions before a controlled cutover.
+9. In **Prevention**, compare the lab's snapshot-tier protection with isolated vaulted backup and immutability, then propose endpoint protection, least privilege, and an alert for unusual file operations.
+
+#### Scenario C: Capacity pressure
+
+**Simulated facts:** At 14:10, an application owner reported failed writes to `Department\Engineering`. Capacity has grown steadily for four weeks and no capacity alert was received.
+
+1. Enter the simulated facts in the **Impact** and **Time window** rows of the incident note. Use 14:10 as the first observed time and 13:45 as the last known-good time.
+2. In the storage account's left menu, under **Data storage**, select **Classic file shares**, and then select `workshop`.
+3. On the share **Overview** page, under **Size**, record **Maximum storage (GiB)** and **Used storage capacity (GiB)** in **Evidence**.
+4. Select **Metrics**, display **File Capacity**, and record the value, time range, chart trend, and whether the metric is account- or share-scoped.
+5. In **Diagnosis**, explain whether the current lab evidence supports actual capacity exhaustion. Keep the simulated four-week growth report separate from the live lab metric.
+6. In **Action**, propose an immediate capacity increase or removal of approved obsolete data, based on retention policy. Do not delete lab data.
+7. In **Validation**, require a successful test write and confirmation that used capacity remains below the maximum with operating headroom.
+8. In **Prevention**, specify a capacity alert threshold, such as 80 percent, and explain why it leaves time to respond.
+
+#### Scenario D: High latency
+
+**Simulated facts:** At 14:10, users reported that opening files from `Department\Engineering` takes more than 20 seconds. The service was last known to respond normally at 13:45.
+
+1. Enter the simulated facts in the **Impact** and **Time window** rows of the incident note.
+2. In the storage account's **Metrics** page, display **Success E2E Latency** and **Success Server Latency** over the same time range. Record both values in **Evidence**.
+3. On `vm-filesclient-pNN`, open Windows PowerShell and run the following commands after replacing the placeholder with the storage account name recorded in Lab 1:
+
+```powershell
+$storageAccount = '<assigned-storage-account>'
+$hostName = "$storageAccount.file.core.windows.net"
+Resolve-DnsName $hostName
+Test-NetConnection $hostName -Port 445
+```
+
+4. Record the resolved private IP and `TcpTestSucceeded` value in **Evidence**.
+5. In **Metrics**, display **Transactions**, select **Apply splitting**, choose **Response type**, and check for throttling responses. Record the result.
+6. In **Diagnosis**, compare end-to-end latency with server latency. A much higher end-to-end value points toward the client or network path; similar high values point toward the service or workload.
+7. In **Action**, choose one response supported by the evidence: investigate the network path, change the workload pattern, use provisioned performance, change the storage tier, or evaluate Azure File Sync caching.
+8. In **Validation**, repeat the latency, DNS, TCP 445, and transaction checks and confirm that user-observed open time returns to the agreed target.
+9. In **Prevention**, propose latency and throttling alerts plus a documented performance baseline.
+
+### Task 4: Complete the incident note
 
 1. Review your completed incident note and ensure it contains no passwords, account keys, or other secrets.
-2. Prepare a two-minute explanation covering impact, strongest evidence, diagnosis, recovery action, and validation.
-3. Write one answer to: **What single piece of evidence would disprove your diagnosis?**
-4. Present the incident note when called by the facilitator.
+2. Confirm that all seven rows contain scenario-specific content rather than general Azure Files guidance.
+3. Under the table, write `Strongest evidence:` followed by the metric, command result, recovery point, or portal value that most strongly supports the diagnosis.
+4. Write `Disproving evidence:` followed by one result that would show the diagnosis is wrong.
+5. Save the completed incident note with your workshop evidence.
+
+**Pass criteria:** The saved note contains all seven completed rows, one strongest-evidence statement, one disproving-evidence statement, and no secrets. No Azure configuration change or simulated destructive action is required.
 
 ## Cleanup
 
-Do not delete the environment until the facilitator has captured validation evidence.
+Do not delete the resource group or any Azure resource. Environment deletion is performed separately after the workshop.
 
 ### Participant steps
 
@@ -675,8 +733,7 @@ cmdkey /delete:$storageHost
 5. Close the client VM Bastion tab, return to `rg-lab-files-pNN`, select `vm-fileserver-pNN`, and connect through **Connect > Bastion**.
 6. Open Windows PowerShell and repeat steps 2-4 on the source VM.
 7. Close the source VM Bastion tab.
-8. Notify the facilitator in the workshop meeting or shared chat that `rg-lab-files-pNN` is ready for cleanup.
-9. Stop here. Participants must not delete the resource group, Recovery Services vault, protected item, or storage account.
+8. Confirm that your notes and screenshots are saved outside the lab VMs, and then stop. Participants must not delete the resource group, Recovery Services vault, protected item, or storage account.
 
 ## Microsoft Learn References
 
