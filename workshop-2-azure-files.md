@@ -94,11 +94,11 @@ Replace `NN` with your two-digit participant number. Do not use another particip
     - **Hierarchical namespace** is **Disabled**.
 8. In the left menu, under **Data storage**, select **Classic file shares**.
 9. In the file-share list, select the share named `workshop`.
-10. On the share **Overview** page, keep the **Properties** tab selected. Under **Size**, record **Maximum storage (GiB)**, **Used storage capacity (GiB)**, and **Access tier**.
-11. Under **SMB protocol settings**, record **Security profile**, **SMB protocol versions**, and **SMB channel encryption** exactly as displayed. A dash (`-`) means that the portal is not showing a specific configured value.
-12. In the breadcrumb at the top of the page, select the previous page to return to the file-share list.
-13. On the file-share page toolbar, select **Soft delete**.
-14. In the **Soft delete** pane, confirm that soft delete is **Enabled** and record the displayed retention period. Close the pane without making changes.
+10. On the share **Overview** page, select the **Capabilities** tab.
+11. Select the **Soft delete** tile. In the **Soft delete** pane, confirm that **Soft delete for all classic file shares** is **Enabled** and record the **Classic file share retainment period in days**. Select **Discard** or close the pane without making changes.
+12. Select the **Properties** tab. Under **Size**, record **Maximum storage (GiB)**, **Used storage capacity (GiB)**, and **Access tier**.
+13. Under **SMB protocol settings**, record **Security profile**, **SMB protocol versions**, and **SMB channel encryption** exactly as displayed. A dash (`-`) means that the portal is not showing a specific configured value.
+14. In the breadcrumb at the top of the page, select the previous page to return to the file-share list.
 
 **Evidence:** Record the storage settings and explain why account-key access is an exception for this lab rather than the production recommendation.
 
@@ -444,7 +444,7 @@ Get-Content (Get-ChildItem Z:\BackupRestore -Filter quarterly-plan.txt -File -Re
 5. In the left menu, under **Settings**, select **Configuration**.
 6. Confirm that **Secure transfer required** is **Enabled** and **Minimum TLS version** is **Version 1.2** or later.
 7. In the left menu, under **Data storage**, select **Classic file shares**.
-8. On the file-share toolbar, select **Soft delete** and record the enabled state and retention period. Close the pane without making changes.
+8. Select `workshop`, select the **Capabilities** tab, and then select the **Soft delete** tile. Record the enabled state and retention period, and then select **Discard** or close the pane without making changes.
 9. In the storage account's left menu, select **Access control (IAM)**.
 10. Select the **Role assignments** tab and use the **Role** column to identify assignments that can read or manage the account. Record one relevant role and assignee without recording credentials.
 11. In the left menu, under **Security + networking**, select **Access keys**.
