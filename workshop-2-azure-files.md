@@ -34,28 +34,55 @@ By the end of the workshop, participants can:
 
 ## Architecture
 
+![Workshop 2 Azure Files architecture showing private SMB access, migration, backup, and monitoring](assets/workshop-2-azure-files-architecture.png)
+
+The picture shows the deployed workshop environment. The logical flow is also provided below for accessibility and easier review in text-only tools.
+
 ```mermaid
 flowchart LR
-    Portal[Azure portal]
-    Bastion[Bastion Developer]
-    Client[Windows client VM]
-    Source[Windows file-server VM]
-    DNS[Private DNS zone]
-    PE[Private endpoint]
-    Share[SMB Azure file share]
-    Vault[Recovery Services vault]
-    Monitor[Azure Monitor and Log Analytics]
-    Portal --> Bastion
-    Bastion --> Client
-    Bastion --> Source
-    Client -->|DNS| DNS
-    Source -->|DNS| DNS
-    DNS --> PE
-    Client -->|SMB 3.x TCP 445| PE
-    Source -->|Robocopy over SMB| PE
-    PE --> Share
-    Share --> Vault
-    Share --> Monitor
+    User([Participant])
+
+    subgraph Azure[Azure subscription - Sweden Central]
+        direction LR
+
+        subgraph Access[Secure management access]
+            Portal[Azure portal]
+            Bastion[Bastion Developer]
+            Portal --> Bastion
+        end
+
+        subgraph Workload[Private workload virtual network]
+            direction TB
+            Client[Windows client VM]
+            Source[Windows file-server VM]
+            DNS[Private DNS zone<br/>privatelink.file.core.windows.net]
+            PE[Private endpoint<br/>file subresource]
+
+            Client -. DNS lookup .-> DNS
+            Source -. DNS lookup .-> DNS
+            DNS -->|Private A record| PE
+        end
+
+        subgraph Storage[Azure Files data plane]
+            Share[(SMB Azure file share<br/>workshop)]
+        end
+
+        subgraph Operations[Protection and operations]
+            direction TB
+            Vault[Recovery Services vault<br/>snapshot-tier backup]
+            Monitor[Azure Monitor<br/>Log Analytics and alerts]
+        end
+
+        Bastion --> Client
+        Bastion --> Source
+        Client -->|SMB 3.x over TCP 445| PE
+        Source -->|Robocopy over SMB| PE
+        PE --> Share
+        Share -->|Backup and restore| Vault
+        Share -->|Metrics and diagnostic logs| Monitor
+    end
+
+    User --> Portal
 ```
 
 ## Assigned Environment
