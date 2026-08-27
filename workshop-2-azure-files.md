@@ -603,10 +603,12 @@ Remove-Item $testPath
 4. Record the workload's likely operation pattern, such as many small files, large sequential transfers, or high IOPS.
 5. Decide whether the evidence supports changing the tier, using provisioned performance, adding Azure File Sync local caching, or changing the workload. Tie the recommendation to one observed metric or command result.
 
-5. Review your completed incident note and ensure it contains no passwords, account keys, or other secrets.
-6. Prepare a two-minute explanation covering impact, strongest evidence, diagnosis, recovery action, and validation.
-7. Write one answer to: **What single piece of evidence would disprove your diagnosis?**
-8. Present the incident note when called by the facilitator.
+### Complete and present your incident note
+
+1. Review your completed incident note and ensure it contains no passwords, account keys, or other secrets.
+2. Prepare a two-minute explanation covering impact, strongest evidence, diagnosis, recovery action, and validation.
+3. Write one answer to: **What single piece of evidence would disprove your diagnosis?**
+4. Present the incident note when called by the facilitator.
 
 ## Cleanup
 
